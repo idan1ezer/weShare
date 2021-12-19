@@ -10,32 +10,47 @@
 
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/share_IMG_share"
+        android:id="@+id/reg_IMG_registration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
-        android:src="@drawable/img_sharing" />
+        android:src="@drawable/img_registration" />
 
     <LinearLayout
-        android:id="@+id/share_LO_details"
+        android:id="@+id/reg_LO_form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_below="@id/share_IMG_share"
+        android:layout_below="@id/reg_IMG_registration"
         android:layout_marginTop="30dp"
         android:layout_marginStart="70dp"
         android:layout_marginEnd="70dp">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/share_EDT_meal"
+            android:id="@+id/reg_EDT_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:errorEnabled="true"
-            android:hint="meal"
+            android:hint="name"
             app:counterMaxLength="20">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/reg_EDT_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true"
+            android:hint="address"
+            app:counterMaxLength="40">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -45,53 +60,48 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/share_EDT_amount"
+            android:id="@+id/reg_EDT_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:errorEnabled="true"
-            android:hint="amount"
+            android:hint="email"
             app:counterMaxLength="3">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"/>
+                android:inputType="textEmailAddress"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/reg_EDT_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true"
+            app:endIconMode="password_toggle"
+            android:hint="password">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/share_BTN_datePicker"
+            android:id="@+id/reg_BTN_register"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="Select dates"
-            android:textColor="#FFFFFF"
-            app:strokeColor="#FFFFFF" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/share_IMG_food"
-            android:layout_width="match_parent"
-            android:layout_height="170dp"
-            android:layout_marginBottom="30dp"
-            android:src="@drawable/svg_upload" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/share_BTN_share"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_marginStart="70dp"
             android:layout_marginEnd="70dp"
-            android:text="share"
+            android:text="register"
             android:textColor="#FFFFFF"
             app:cornerRadius="50dp"
             app:strokeColor="#FFFFFF"/>
 
     </LinearLayout>
-
-
-
-
 
 </RelativeLayout>
