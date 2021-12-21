@@ -8,77 +8,80 @@
     app:cardCornerRadius="20dp"
     android:elevation="8dp"
     app:cardElevation="8dp"
+    android:layout_margin="10dp"
     android:theme="@style/Theme.MaterialComponents.Light">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
+        android:background="#C6C1C6">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/list_IMG_image"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@id/list_LBL_dates"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher_background" />
 
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/list_LBL_meal"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_toEndOf="@id/list_IMG_image"
             android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="2"
-            android:minLines="2"
+            android:gravity="bottom"
+            android:maxLines="1"
+            android:minLines="1"
             android:text="meal"
             android:textSize="18sp" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/list_LBL_location"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_below="@id/list_LBL_meal"
+            android:layout_alignStart="@id/list_LBL_meal"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="2"
-            android:minLines="2"
+            android:maxLines="1"
+            android:minLines="1"
             android:text="location"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/list_LBL_amount"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_below="@id/list_LBL_location"
+            android:layout_alignStart="@id/list_LBL_meal"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="2"
-            android:minLines="2"
+            android:maxLines="1"
             android:text="amount"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/list_LBL_dates"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_below="@id/list_LBL_amount"
+            android:layout_alignStart="@id/list_LBL_meal"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="2"
-            android:minLines="2"
+            android:maxLines="1"
             android:text="dates"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/list_IMG_image"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            android:src="@drawable/ic_food_logo" />
+    </RelativeLayout>
 
-
-
-
-
-
-
-
-
-    </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
