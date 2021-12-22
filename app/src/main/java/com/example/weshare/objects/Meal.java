@@ -1,6 +1,9 @@
 package com.example.weshare.objects;
 
 public class Meal {
+    private static int counter = 0;
+    private final int mealId;
+
     private String name;
     private String location;
     private int amount;
@@ -8,8 +11,15 @@ public class Meal {
     private String image;
     private double lat;
     private double lon;
+    private boolean isAvailable;
 
-    public Meal() { }
+    public Meal() {
+        this.mealId = counter++;
+    }
+
+    public int getMealId() {
+        return mealId;
+    }
 
     public String getName() {
         return name;
@@ -71,6 +81,15 @@ public class Meal {
 
     public Meal setLon(double lon) {
         this.lon = lon;
+        return this;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public Meal setAvailable(boolean available) {
+        isAvailable = available;
         return this;
     }
 }

@@ -8,10 +8,13 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.weshare.R;
+import com.example.weshare.objects.User;
 import com.example.weshare.support.Validator;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class ActivityRegistration extends AppCompatActivity {
 
@@ -75,6 +78,7 @@ public class ActivityRegistration extends AppCompatActivity {
 
     private void register() {
         if (isValid()) {
+            addToDB();
             Toast.makeText(this, "Registration completed!", Toast.LENGTH_LONG).show();
             finish();
             Intent intent = new Intent(this, ActivityStart.class);
@@ -83,6 +87,21 @@ public class ActivityRegistration extends AppCompatActivity {
 
         else
             Toast.makeText(this, "One or more field are invalid!", Toast.LENGTH_LONG).show();
+    }
+
+    private void addToDB() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://weshare-70609-default-rtdb.firebaseio.com/");
+        DatabaseReference myRef = database.getReference("users");
+
+        User user = new User().
+                setUsername(reg_EDT_username.getEditText().getText().toString()).
+                setPassword(reg_EDT_password.getEditText().getText().toString()).
+                setName(reg_EDT_name.getEditText().getText().toString()).
+                setPhone(reg_EDT_phone.getEditText().getText().toString()).
+                setEmail(reg_EDT_email.getEditText().getText().toString()).
+                setDonations(0).setReceived(0);
+
+        myRef.child(user.getUsername()).setValue(user);
     }
 
     private void findViews() {
