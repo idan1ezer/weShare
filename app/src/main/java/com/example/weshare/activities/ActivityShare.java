@@ -59,6 +59,7 @@ public class ActivityShare extends AppCompatActivity {
 
     private Uri contentUri;
     private String imageFileName;
+    private String imageLink;
 
     private LocationManager locationManager;
     private FusedLocationProviderClient client;
@@ -113,8 +114,10 @@ public class ActivityShare extends AppCompatActivity {
                 setLat(lat).setLon(lon).
                 setAvailable(true);
 
-        myRef.child("meal_"+meal.getMealId()).setValue(meal);
         uploadImageToFirebase(contentUri, meal);
+        getImageLink();
+        meal.setImage(imageLink);
+        myRef.child("meal_"+meal.getMealId()).setValue(meal);
 
         MyFirebaseDB.setCounter("meals_counter", User.getCounter()+1);
 
@@ -123,11 +126,16 @@ public class ActivityShare extends AppCompatActivity {
         startActivity(intent);
     }
 
-
-
-
-
-
+    private void getImageLink() {
+        final StorageReference image = storageReference.child("pictures/" + imageFileName);
+        image.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>(){
+            @Override
+            public void onSuccess(Uri downloadUrl)
+            {
+                imageLink = downloadUrl.toString();
+            }
+        });
+    }
 
 
     private void imgUpload() {

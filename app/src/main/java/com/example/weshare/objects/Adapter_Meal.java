@@ -1,5 +1,6 @@
 package com.example.weshare.objects;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.weshare.R;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
@@ -15,10 +17,12 @@ import java.util.ArrayList;
 
 public class Adapter_Meal extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
+    private Activity activity;
     private ArrayList<Meal> meals = new ArrayList<>();
     private MealMapClickListener mealMapClickListener;
 
     public Adapter_Meal(FragmentActivity activity, ArrayList<Meal> meals) {
+        this.activity = activity;
         this.meals = meals;
     }
 
@@ -44,6 +48,10 @@ public class Adapter_Meal extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         mealViewHolder.list_LBL_location.setText(""+meal.getLocation());
         mealViewHolder.list_LBL_dates.setText(""+meal.getDates());
         //mealViewHolder.list_IMG_image.setImageResource(meal.getImage());
+        Glide
+                .with(activity)
+                .load(meal.getImage())
+                .into(mealViewHolder.list_IMG_image);
     }
 
     @Override
