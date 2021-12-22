@@ -7,7 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.weshare.R;
+import com.example.weshare.objects.Meal;
+import com.example.weshare.objects.User;
+import com.example.weshare.support.MyFirebaseDB;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class ActivityStart extends AppCompatActivity {
     private MaterialButton start_BTN_register;
@@ -21,7 +26,28 @@ public class ActivityStart extends AppCompatActivity {
 
         findViews();
         initBTNs();
+        initCounters();
 
+        //FirebaseDatabase database = FirebaseDatabase.getInstance("https://weshare-70609-default-rtdb.firebaseio.com/");
+        //DatabaseReference myRef = database.getReference("DB_counter");
+        //myRef.child("users_counter").setValue(0);
+        //myRef.child("meals_counter").setValue(0);
+
+    }
+
+    private void initCounters() {
+        MyFirebaseDB.getCounter("meals_counter", new MyFirebaseDB.CallBack_Counter() {
+            @Override
+            public void dataReady(int value) {
+                Meal.setCounter(value);
+            }
+        });
+        MyFirebaseDB.getCounter("users_counter", new MyFirebaseDB.CallBack_Counter() {
+            @Override
+            public void dataReady(int value) {
+                User.setCounter(value+1);
+            }
+        });
     }
 
     private void initBTNs() {

@@ -1,6 +1,9 @@
 package com.example.weshare.objects;
 
 public class User {
+    private static int counter = 0;
+    private final int userID;
+
     private String username;
     private String name;
     private double[] address;
@@ -10,7 +13,21 @@ public class User {
     private int donations;
     private int received;
 
-    public User() { }
+    public User() {
+        this.userID = counter++;
+    }
+
+    public static int getCounter() {
+        return counter;
+    }
+
+    public static void setCounter(int counter) {
+        User.counter = counter;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
 
     public String getUsername() {
         return username;

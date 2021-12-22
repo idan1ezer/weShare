@@ -28,6 +28,8 @@ import android.widget.Toast;
 
 import com.example.weshare.R;
 import com.example.weshare.objects.Meal;
+import com.example.weshare.objects.User;
+import com.example.weshare.support.MyFirebaseDB;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -114,10 +116,7 @@ public class ActivityShare extends AppCompatActivity {
         myRef.child("meal_"+meal.getMealId()).setValue(meal);
         uploadImageToFirebase(contentUri, meal);
 
-        myRef = database.getReference("DB_counter");
-        //myRef.child("meals_counter").setValue()
-        // read how many current and add another one
-        // need to make read functions
+        MyFirebaseDB.setCounter("meals_counter", User.getCounter()+1);
 
         finish();
         Intent intent = new Intent(this, ActivityMenu.class);

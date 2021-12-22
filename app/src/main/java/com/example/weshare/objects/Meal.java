@@ -17,6 +17,14 @@ public class Meal {
         this.mealId = counter++;
     }
 
+    public static int getCounter() {
+        return counter;
+    }
+
+    public static void setCounter(int counter) {
+        Meal.counter = counter;
+    }
+
     public int getMealId() {
         return mealId;
     }
