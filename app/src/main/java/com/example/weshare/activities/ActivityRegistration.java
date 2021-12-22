@@ -102,6 +102,11 @@ public class ActivityRegistration extends AppCompatActivity {
                 setDonations(0).setReceived(0);
 
         myRef.child(user.getUsername()).setValue(user);
+
+        myRef = database.getReference("DB_counter");
+        //myRef.child("users_counter").setValue()
+        // read how many current and add another one
+        // need to make read functions
     }
 
     private void findViews() {
