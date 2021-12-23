@@ -1,5 +1,7 @@
 package com.example.weshare.objects;
 
+import android.net.Uri;
+
 public class Meal {
     private static int counter = 0;
     private final int mealId;

@@ -106,6 +106,7 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://weshare-70609-default-rtdb.firebaseio.com/");
         DatabaseReference myRef = database.getReference("meals");
 
+
         Meal meal = new Meal().
                 setName(share_EDT_meal.getEditText().getText().toString()).
                 setAmount(Integer.valueOf(share_EDT_amount.getEditText().getText().toString())).
@@ -115,9 +116,11 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
                 setAvailable(true);
 
         uploadImageToFirebase(contentUri, meal);
-        getImageLink();
-        meal.setImage(imageLink);
+        //getImageLink();
+        Log.d("checkImg", ""+imageLink);
+        meal.setImage(""+imageLink);
         myRef.child("meal_"+meal.getMealId()).setValue(meal);
+        //myRef.child("meal_"+meal.getMealId()).child("image").setValue(imageLink);
 
         MyFirebaseDB.setCounter("meals_counter", User.getCounter()+1);
 
@@ -128,11 +131,12 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
 
     private void getImageLink() {
         final StorageReference image = storageReference.child("pictures/" + imageFileName);
+        //Log.d("image22","pictures/" + imageFileName);
         image.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>(){
             @Override
             public void onSuccess(Uri downloadUrl)
             {
-                imageLink = downloadUrl.toString();
+                //imageLink = downloadUrl;
             }
         });
     }
@@ -164,7 +168,12 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
                 image.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Log.d("tag", "onSuccess: Uploaded Image URl is " + uri.toString());
+                        //Log.d("tag", "onSuccess: Uploaded Image URl is " + uri.toString());
+                        imageLink = "" + uri.toString();
+
+                        FirebaseDatabase database = FirebaseDatabase.getInstance("https://weshare-70609-default-rtdb.firebaseio.com/");
+                        DatabaseReference myRef = database.getReference("meals");
+                        myRef.child("meal_"+meal.getMealId()).child("image").setValue(imageLink);
                     }
                 });
 
