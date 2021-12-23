@@ -22,6 +22,7 @@
         app:lottie_speed="0.75" />
 
     <LinearLayout
+        android:id="@+id/menu_LO_btns"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -57,6 +58,16 @@
             app:cornerRadius="50dp"
             app:strokeColor="#FFFFFF"/>
     </LinearLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/menu_TXT_verify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/menu_LO_btns"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:text="Click to verify email"
+        android:textColor="#FFFFFF" />
 
 
 

@@ -1,5 +1,6 @@
 package com.example.weshare.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,9 +13,16 @@ import com.example.weshare.objects.Meal;
 import com.example.weshare.objects.User;
 import com.example.weshare.support.MyFirebaseDB;
 import com.example.weshare.support.Validator;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -25,20 +33,33 @@ public class ActivityRegistration extends AppCompatActivity {
     private TextInputLayout reg_EDT_name;
     private TextInputLayout reg_EDT_phone;
     private TextInputLayout reg_EDT_email;
+    private MaterialTextView reg_TXT_login;
 
     private TextInputLayout[] allFields;
     private MaterialButton reg_BTN_register;
+
+    private FirebaseAuth fAuth;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+        fAuth = FirebaseAuth.getInstance();
 
         findViews();
         initBTNs();
-
+        //checkUser();
         checkFormValidation();
 
+    }
+
+    private void checkUser() {
+        if (fAuth.getCurrentUser() != null) {
+            finish();
+            Intent intent = new Intent(this, ActivityStart.class);
+            startActivity(intent);
+        }
     }
 
     private boolean isValid() {
@@ -76,6 +97,15 @@ public class ActivityRegistration extends AppCompatActivity {
             @Override
             public void onClick(View v) { register();}
         });
+
+        reg_TXT_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                Intent intent = new Intent(ActivityRegistration.this, ActivityStart.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void register() {
@@ -96,16 +126,43 @@ public class ActivityRegistration extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://weshare-70609-default-rtdb.firebaseio.com/");
         DatabaseReference myRef = database.getReference("users");
 
-        User user = new User().
-                setUsername(reg_EDT_username.getEditText().getText().toString()).
-                setPassword(reg_EDT_password.getEditText().getText().toString()).
-                setName(reg_EDT_name.getEditText().getText().toString()).
-                setPhone(reg_EDT_phone.getEditText().getText().toString()).
-                setEmail(reg_EDT_email.getEditText().getText().toString()).
-                setDonations(0).setReceived(0);
+        fAuth.createUserWithEmailAndPassword(reg_EDT_email.getEditText().getText().toString(), reg_EDT_password.getEditText().getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    FirebaseUser fUser = fAuth.getCurrentUser();
+                    fUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(@NonNull Void unused) {
+                            Toast.makeText(ActivityRegistration.this, "Verification mail has been sent!", Toast.LENGTH_LONG).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(ActivityRegistration.this, "Error!" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
 
-        myRef.child(user.getUsername()).setValue(user);
+                    Toast.makeText(ActivityRegistration.this, "Registration completed!", Toast.LENGTH_LONG).show();
+                    userID = fAuth.getCurrentUser().getUid();
+
+                    User user = new User().
+                            setUsername(reg_EDT_username.getEditText().getText().toString()).
+                            setPassword(reg_EDT_password.getEditText().getText().toString()).
+                            setName(reg_EDT_name.getEditText().getText().toString()).
+                            setPhone(reg_EDT_phone.getEditText().getText().toString()).
+                            setEmail(reg_EDT_email.getEditText().getText().toString()).
+                            setDonations(0).setReceived(0);
+
+                    myRef.child(userID).setValue(user);
+                }
+                else
+                    Toast.makeText(ActivityRegistration.this, "Error!" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
         MyFirebaseDB.setCounter("users_counter", User.getCounter());
+
     }
 
     private void findViews() {
@@ -115,6 +172,7 @@ public class ActivityRegistration extends AppCompatActivity {
         reg_EDT_phone = findViewById(R.id.reg_EDT_phone);
         reg_EDT_email = findViewById(R.id.reg_EDT_email);
         reg_BTN_register = findViewById(R.id.reg_BTN_register);
+        reg_TXT_login = findViewById(R.id.reg_TXT_login);
 
         allFields = new TextInputLayout[] {
                 reg_EDT_username,

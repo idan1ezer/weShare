@@ -38,16 +38,16 @@
         android:layout_marginEnd="70dp">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/start_EDT_username"
+            android:id="@+id/start_EDT_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:errorEnabled="true"
-            android:hint="user name">
+            android:hint="email">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textShortMessage"/>
+                android:inputType="textEmailAddress"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -68,42 +68,53 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/start_LO_btns"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_below="@id/start_LO_details"
         android:layout_marginStart="60dp"
-        android:layout_marginEnd="60dp">
+        android:layout_marginEnd="60dp"
+        android:orientation="horizontal">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/start_BTN_register"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
+            android:layout_weight="1"
             android:text="Register"
             android:textColor="#FFFFFF"
             app:cornerRadius="50dp"
-            app:strokeColor="#FFFFFF"/>
+            app:strokeColor="#FFFFFF" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/start_BTN_login"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
+            android:layout_weight="1"
             android:text="Login"
             android:textColor="#FFFFFF"
             app:cornerRadius="50dp"
-            app:strokeColor="#FFFFFF"/>
-
+            app:strokeColor="#FFFFFF" />
 
 
     </LinearLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/start_TXT_forgot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/start_LO_btns"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:text="Forgot password?"
+        android:textColor="#FFFFFF" />
+
 
 
 
