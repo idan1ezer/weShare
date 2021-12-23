@@ -124,7 +124,7 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
         myRef.child("meal_"+meal.getMealId()).setValue(meal);
         //myRef.child("meal_"+meal.getMealId()).child("image").setValue(imageLink);
 
-        MyFirebaseDB.setCounter("meals_counter", User.getCounter()+1);
+        MyFirebaseDB.setCounter("meals_counter", Meal.getCounter());
 
         finish();
         Intent intent = new Intent(this, ActivityMenu.class);

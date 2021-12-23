@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.weshare.R;
+import com.example.weshare.objects.Meal;
 import com.example.weshare.objects.User;
 import com.example.weshare.support.MyFirebaseDB;
 import com.example.weshare.support.Validator;
@@ -104,7 +105,7 @@ public class ActivityRegistration extends AppCompatActivity {
                 setDonations(0).setReceived(0);
 
         myRef.child(user.getUsername()).setValue(user);
-        MyFirebaseDB.setCounter("users_counter", User.getCounter()+1);
+        MyFirebaseDB.setCounter("users_counter", User.getCounter());
     }
 
     private void findViews() {

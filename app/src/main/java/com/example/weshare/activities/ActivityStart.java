@@ -55,12 +55,14 @@ public class ActivityStart extends AppCompatActivity {
             @Override
             public void dataReady(int value) {
                 Meal.setCounter(value);
+                Log.d("counter1", "meals = " +value);
             }
         });
         MyFirebaseDB.getCounter("users_counter", new MyFirebaseDB.CallBack_Counter() {
             @Override
             public void dataReady(int value) {
-                User.setCounter(value+1);
+                User.setCounter(value);
+                Log.d("counter1", "users = " +value);
             }
         });
     }
