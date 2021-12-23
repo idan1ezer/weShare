@@ -26,12 +26,13 @@ import java.util.ArrayList;
 
 public class FragmentList extends Fragment {
 
-    private ArrayList<Meal> meals = new ArrayList<>();
-    private Adapter_Meal adapter_meal;
+    private ArrayList<Meal> myMeals = new ArrayList<>();
     private RecyclerView board_LST_meals;
+    //private Adapter_Meal adapter_meal;
 
     private AppCompatActivity activity;
     private CallBack_List callBack_list;
+
 
     public void setActivity(AppCompatActivity activity) {
         this.activity = activity;
@@ -40,6 +41,8 @@ public class FragmentList extends Fragment {
     public void setCallBackList(CallBack_List callBack_list) {
         this.callBack_list = callBack_list;
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,12 +61,32 @@ public class FragmentList extends Fragment {
         MyFirebaseDB.CallBack_Meals callBack_meals = new MyFirebaseDB.CallBack_Meals() {
             @Override
             public void dataReady(ArrayList<Meal> mealsArr) {
-                adapter_meal = new Adapter_Meal(getActivity(), mealsArr);
+                //setMyMeals(mealsArr);
+                //Log.d("showMeals1", ""+myMeals.size());
+                //adapter_meal = new Adapter_Meal(getActivity(), mealsArr);
+                Adapter_Meal adapter_meal = new Adapter_Meal(getActivity(), mealsArr);
+
+                // Grid
+                board_LST_meals.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+                board_LST_meals.setHasFixedSize(true);
+                board_LST_meals.setItemAnimator(new DefaultItemAnimator());
+                board_LST_meals.setAdapter(adapter_meal);
+
+                adapter_meal.setMealMapClickListener(new Adapter_Meal.MealMapClickListener() {
+                    @Override
+                    public void mealMapClicked(Meal meal, int pos) {
+                        double lat = meal.getLat();
+                        double lon = meal.getLon();
+                        callBack_list.getMealLocation(lat, lon);
+                    }
+                });
             }
         };
         MyFirebaseDB.getAllMeals(callBack_meals);
 
-
+        /*
+        //myMeal.add(new Meal().setName("bla bla").setAmount(2).setImage("https://food.fnr.sndimg.com/content/dam/images/food/fullset/2020/11/24/0/FN_Pineapple-Honey-Glazed-Ham_s4x3.jpg.rend.hgtvcom.406.305.suffix/1606249359140.jpeg").setLat(32.054).setLon(34.5101));
+        Adapter_Meal adapter_meal = new Adapter_Meal(getActivity(), myMeals);
 
         // Grid
         board_LST_meals.setLayoutManager(new GridLayoutManager(getActivity(), 1));
@@ -71,16 +94,21 @@ public class FragmentList extends Fragment {
         board_LST_meals.setItemAnimator(new DefaultItemAnimator());
         board_LST_meals.setAdapter(adapter_meal);
 
-        if (adapter_meal != null) {
-            adapter_meal.setMealMapClickListener(new Adapter_Meal.MealMapClickListener() {
-                @Override
-                public void mealMapClicked(Meal meal, int pos) {
-                    double lat = meal.getLat();
-                    double lon = meal.getLon();
-                    callBack_list.getMealLocation(lat, lon);
-                }
-            });
-        }
+        adapter_meal.setMealMapClickListener(new Adapter_Meal.MealMapClickListener() {
+            @Override
+            public void mealMapClicked(Meal meal, int pos) {
+                double lat = meal.getLat();
+                double lon = meal.getLon();
+                callBack_list.getMealLocation(lat, lon);
+            }
+        });
+
+         */
+    }
+
+    public FragmentList setMyMeals(ArrayList<Meal> myMeals) {
+        this.myMeals = myMeals;
+        return this;
     }
 
     private void findViews(View view) {

@@ -13,13 +13,13 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.example.weshare.R;
 import com.example.weshare.callbacks.CallBack_List;
 import com.example.weshare.callbacks.CallBack_Map;
 import com.example.weshare.fragments.FragmentGoogleMaps;
 import com.example.weshare.fragments.FragmentList;
+import com.example.weshare.objects.Adapter_Meal;
 import com.example.weshare.objects.Meal;
 import com.example.weshare.support.MyFirebaseDB;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -64,7 +64,7 @@ public class ActivityReceive extends AppCompatActivity implements LocationListen
         fragmentGoogleMaps.setActivity(this);
         fragmentGoogleMaps.setCallBackMap(callBack_map);
         fragmentGoogleMaps.setLat(lat).setLon(lon);
-        //callBack_map.getLocation(lat,lon);
+        callBack_map.getLocation(lat,lon);
         getSupportFragmentManager().beginTransaction().add(R.id.receive_frame2, fragmentGoogleMaps).commit();
     }
 
