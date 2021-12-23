@@ -19,7 +19,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -34,7 +33,6 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.TextInputLayout;
@@ -44,10 +42,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -96,12 +91,18 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
 
         share_BTN_share.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { share();}
+            public void onClick(View v) {
+                try {
+                    share();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         });
 
     }
 
-    private void share() {
+    private void share() throws IOException {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://weshare-70609-default-rtdb.firebaseio.com/");
         DatabaseReference myRef = database.getReference("meals");
@@ -115,6 +116,7 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
                 setLat(lat).setLon(lon).
                 setAvailable(true);
 
+        getLocation(meal);
         uploadImageToFirebase(contentUri, meal);
         //getImageLink();
         Log.d("checkImg", ""+imageLink);
@@ -127,6 +129,17 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
         finish();
         Intent intent = new Intent(this, ActivityMenu.class);
         startActivity(intent);
+    }
+
+    private void getLocation(Meal meal) throws IOException {
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(this, Locale.getDefault());
+
+        addresses = geocoder.getFromLocation(lat, lon, 1);
+        meal.setLocation(addresses.get(0).getAddressLine(0));
+
+        Log.d("mealLoc", "" + meal.getLocation());
     }
 
     private void getImageLink() {

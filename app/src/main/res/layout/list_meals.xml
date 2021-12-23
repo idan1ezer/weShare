@@ -18,7 +18,7 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/list_IMG_image"
-            android:layout_width="200dp"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
             android:layout_alignBottom="@id/list_LBL_dates"
             android:layout_alignParentStart="true"
@@ -51,7 +51,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:ellipsize="end"
-            android:maxLines="1"
+            android:maxLines="2"
             android:minLines="1"
             android:text="location"
             android:textSize="14sp" />

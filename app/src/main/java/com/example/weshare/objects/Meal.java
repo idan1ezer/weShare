@@ -15,6 +15,7 @@ public class Meal {
     private double lon;
     private boolean isAvailable;
 
+
     public Meal() {
         this.mealId = counter++;
     }
