@@ -15,6 +15,8 @@ public class User {
     private int donations;
     private int received;
 
+    private double lat, lon;
+
     public User() {
         this.userID = counter++;
     }
@@ -100,6 +102,24 @@ public class User {
 
     public User setReceived(int received) {
         this.received = received;
+        return this;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public User setLat(double lat) {
+        this.lat = lat;
+        return this;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+
+    public User setLon(double lon) {
+        this.lon = lon;
         return this;
     }
 }

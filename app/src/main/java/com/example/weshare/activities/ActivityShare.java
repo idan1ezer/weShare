@@ -51,7 +51,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class ActivityShare extends AppCompatActivity {
+public class ActivityShare extends AppCompatActivity implements LocationListener {
     public static final int GALLERY_REQUEST_CODE = 105;
 
     private StorageReference storageReference;
@@ -61,9 +61,9 @@ public class ActivityShare extends AppCompatActivity {
     private String imageFileName;
     private String imageLink;
 
-    private LocationManager locationManager;
     private FusedLocationProviderClient client;
-    double lat, lon;
+    private LocationManager locationManager;
+    private double lat, lon;
 
     private TextInputLayout share_EDT_meal;
     private TextInputLayout share_EDT_amount;
@@ -194,6 +194,7 @@ public class ActivityShare extends AppCompatActivity {
                     Manifest.permission.ACCESS_FINE_LOCATION }, 100);
         }
 
+
         getLocation();
     }
 
@@ -213,8 +214,32 @@ public class ActivityShare extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onLocationChanged(Location location) {
+        try {
+            Geocoder geocoder = new Geocoder(ActivityShare.this, Locale.getDefault());
+            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
+            String address = addresses.get(0).getAddressLine(0);
 
+            lat = location.getLatitude();
+            lon = location.getLongitude();
 
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+    }
 
 
 

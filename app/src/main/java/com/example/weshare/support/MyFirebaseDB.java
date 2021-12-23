@@ -1,5 +1,7 @@
 package com.example.weshare.support;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.weshare.objects.Meal;

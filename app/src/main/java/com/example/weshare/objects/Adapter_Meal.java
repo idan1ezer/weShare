@@ -1,6 +1,7 @@
 package com.example.weshare.objects;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ public class Adapter_Meal extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public Adapter_Meal(FragmentActivity activity, ArrayList<Meal> meals) {
         this.activity = activity;
         this.meals = meals;
+        Log.d("AdapterM",""+meals.size());
     }
 
     public Adapter_Meal setMealMapClickListener(MealMapClickListener mealMapClickListener) {
@@ -41,13 +43,11 @@ public class Adapter_Meal extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         MealViewHolder mealViewHolder = (MealViewHolder) holder;
         Meal meal = getItem(position);
-        //Log.d("pttt", "position= " + position);
 
         mealViewHolder.list_LBL_meal.setText(""+meal.getName());
         mealViewHolder.list_LBL_amount.setText(""+meal.getAmount());
         mealViewHolder.list_LBL_location.setText(""+meal.getLocation());
         mealViewHolder.list_LBL_dates.setText(""+meal.getDates());
-        //mealViewHolder.list_IMG_image.setImageResource(meal.getImage());
         Glide
                 .with(activity)
                 .load(meal.getImage())
@@ -55,9 +55,7 @@ public class Adapter_Meal extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     }
 
     @Override
-    public int getItemCount() {
-        return meals.size();
-    }
+    public int getItemCount() { return meals.size(); }
 
     private Meal getItem(int position) {
         return meals.get(position);

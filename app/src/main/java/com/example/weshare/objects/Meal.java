@@ -100,4 +100,9 @@ public class Meal {
         isAvailable = available;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "Meal num " + mealId + "is " + name + ", amount of " + amount;
+    }
 }
