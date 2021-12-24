@@ -84,26 +84,6 @@ public class FragmentList extends Fragment {
         };
         MyFirebaseDB.getAllMeals(callBack_meals);
 
-        /*
-        //myMeal.add(new Meal().setName("bla bla").setAmount(2).setImage("https://food.fnr.sndimg.com/content/dam/images/food/fullset/2020/11/24/0/FN_Pineapple-Honey-Glazed-Ham_s4x3.jpg.rend.hgtvcom.406.305.suffix/1606249359140.jpeg").setLat(32.054).setLon(34.5101));
-        Adapter_Meal adapter_meal = new Adapter_Meal(getActivity(), myMeals);
-
-        // Grid
-        board_LST_meals.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-        board_LST_meals.setHasFixedSize(true);
-        board_LST_meals.setItemAnimator(new DefaultItemAnimator());
-        board_LST_meals.setAdapter(adapter_meal);
-
-        adapter_meal.setMealMapClickListener(new Adapter_Meal.MealMapClickListener() {
-            @Override
-            public void mealMapClicked(Meal meal, int pos) {
-                double lat = meal.getLat();
-                double lon = meal.getLon();
-                callBack_list.getMealLocation(lat, lon);
-            }
-        });
-
-         */
     }
 
     public FragmentList setMyMeals(ArrayList<Meal> myMeals) {

@@ -64,6 +64,7 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
     private TextInputLayout share_EDT_meal;
     private TextInputLayout share_EDT_amount;
     private MaterialButton share_BTN_datePicker;
+    private MaterialButton share_BTN_back;
     private ShapeableImageView share_IMG_food;
     private MaterialButton share_BTN_share;
     private TextInputLayout[] allFields;
@@ -102,6 +103,14 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
             }
         });
 
+        share_BTN_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                Intent intent = new Intent(ActivityShare.this, ActivityMenu.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void share() throws IOException {
@@ -294,6 +303,7 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
         share_BTN_datePicker = findViewById(R.id.share_BTN_datePicker);
         share_IMG_food = findViewById(R.id.share_IMG_food);
         share_BTN_share = findViewById(R.id.share_BTN_share);
+        share_BTN_back = findViewById(R.id.share_BTN_back);
         allFields = new TextInputLayout[] {
                 share_EDT_meal,
                 share_EDT_amount

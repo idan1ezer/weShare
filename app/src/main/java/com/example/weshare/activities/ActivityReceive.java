@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -13,6 +14,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.weshare.R;
 import com.example.weshare.callbacks.CallBack_List;
@@ -28,6 +30,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +39,7 @@ import java.util.Locale;
 public class ActivityReceive extends AppCompatActivity implements LocationListener {
     private FragmentList fragmentList;
     private FragmentGoogleMaps fragmentGoogleMaps;
+    private MaterialButton receive_BTN_back;
 
     private LocationManager locationManager;
     private double lat, lon;
@@ -46,9 +50,23 @@ public class ActivityReceive extends AppCompatActivity implements LocationListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receive);
 
+        initBTN();
         checkLocationPermission();
         initFragmentMap();
         initFragmentList();
+    }
+
+    private void initBTN() {
+        receive_BTN_back = findViewById(R.id.receive_BTN_back);
+        receive_BTN_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                Intent intent = new Intent(ActivityReceive.this, ActivityMenu.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void initFragmentList() {

@@ -93,6 +93,18 @@
 
     </LinearLayout>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/share_BTN_back"
+        android:layout_alignParentBottom="true"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="back"
+        android:textColor="#3F72AF"
+        app:cornerRadius="50dp"
+        app:strokeColor="#3F72AF"/>
+
 
 
 
