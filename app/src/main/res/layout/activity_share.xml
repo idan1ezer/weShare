@@ -6,25 +6,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.ActivityStart"
-    android:background="#222831">
+    android:background="#F9F7F7">
 
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/share_IMG_share"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/share_TXT_share"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
-        android:src="@drawable/img_sharing" />
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        app:fontFamily="sans-serif-medium"
+        android:textColor="#112D4E"
+        android:textSize="32sp"
+        android:text="Sharing" />
 
     <LinearLayout
         android:id="@+id/share_LO_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_below="@id/share_IMG_share"
+        android:layout_below="@id/share_TXT_share"
         android:layout_marginTop="30dp"
         android:layout_marginStart="70dp"
         android:layout_marginEnd="70dp">
@@ -35,7 +36,8 @@
             android:layout_height="wrap_content"
             app:errorEnabled="true"
             android:hint="meal"
-            app:counterMaxLength="20">
+            app:counterMaxLength="20"
+            app:boxBackgroundColor="#DBE2EF">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -50,7 +52,8 @@
             android:layout_height="wrap_content"
             app:errorEnabled="true"
             android:hint="amount"
-            app:counterMaxLength="3">
+            app:counterMaxLength="3"
+            app:boxBackgroundColor="#DBE2EF">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -66,8 +69,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:text="Select dates"
-            android:textColor="#FFFFFF"
-            app:strokeColor="#FFFFFF" />
+            android:textColor="#3F72AF"
+            app:strokeColor="#3F72AF" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/share_IMG_food"
@@ -84,9 +87,9 @@
             android:layout_marginStart="70dp"
             android:layout_marginEnd="70dp"
             android:text="share"
-            android:textColor="#FFFFFF"
+            android:textColor="#3F72AF"
             app:cornerRadius="50dp"
-            app:strokeColor="#FFFFFF"/>
+            app:strokeColor="#3F72AF"/>
 
     </LinearLayout>
 

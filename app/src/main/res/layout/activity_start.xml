@@ -6,34 +6,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.ActivityStart"
-    android:background="#222831">
+    android:background="#F9F7F7">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/start_IMG_weShare"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="10dp"
-        android:src="@drawable/img_weshare_logo" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/start_IMG_slogan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/start_IMG_weShare"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:src="@drawable/img_weshare_slogan" />
+        android:src="@drawable/app_logo" />
 
     <LinearLayout
         android:id="@+id/start_LO_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_below="@id/start_IMG_slogan"
-        android:layout_marginTop="30dp"
+        android:layout_below="@id/start_IMG_weShare"
+        android:layout_marginTop="50dp"
         android:layout_marginStart="70dp"
         android:layout_marginEnd="70dp">
 
@@ -42,7 +33,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:errorEnabled="true"
-            android:hint="email">
+            android:hint="email"
+            app:boxBackgroundColor="#DBE2EF">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -57,7 +49,8 @@
             android:layout_height="wrap_content"
             app:errorEnabled="true"
             app:endIconMode="password_toggle"
-            android:hint="password">
+            android:hint="password"
+            app:boxBackgroundColor="#DBE2EF">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -72,6 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/start_LO_details"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
         android:orientation="horizontal">
@@ -85,9 +79,9 @@
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:text="Register"
-            android:textColor="#FFFFFF"
+            android:textColor="#112D4E"
             app:cornerRadius="50dp"
-            app:strokeColor="#FFFFFF" />
+            app:strokeColor="#112D4E" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/start_BTN_login"
@@ -98,9 +92,9 @@
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:text="Login"
-            android:textColor="#FFFFFF"
+            android:textColor="#112D4E"
             app:cornerRadius="50dp"
-            app:strokeColor="#FFFFFF" />
+            app:strokeColor="#112D4E" />
 
 
     </LinearLayout>
@@ -110,10 +104,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/start_LO_btns"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="Forgot password?"
-        android:textColor="#FFFFFF" />
+        android:textColor="#3F72AF" />
 
 
 

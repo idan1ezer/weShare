@@ -22,21 +22,20 @@ public class ActivityMenu extends AppCompatActivity {
     private MaterialTextView menu_TXT_verify;
 
     private FirebaseAuth fAuth;
-    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         fAuth = FirebaseAuth.getInstance();
-        userID = fAuth.getCurrentUser().getUid();
-        FirebaseUser user = fAuth.getCurrentUser();
+        //FirebaseUser user = fAuth.getCurrentUser();
 
+        //check for null shit
         findViews();
-        if (user.isEmailVerified())
+        //if (user.isEmailVerified())
             initBTNs();
-        else
-            notVerified(user);
+        //else
+            //notVerified(user);
     }
 
 

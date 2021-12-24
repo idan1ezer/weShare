@@ -6,19 +6,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.ActivityMenu"
-    android:background="#222831">
+    android:background="#F9F7F7">
 
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottie_SPC_egg"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:id="@+id/lottie_SPC_food"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
         android:scaleType="fitCenter"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/lottie_food_loading"
+        app:lottie_rawRes="@raw/lottie_food_menu"
         app:lottie_speed="0.75" />
 
     <LinearLayout
@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@id/lottie_SPC_egg"
+        android:layout_below="@id/lottie_SPC_food"
         android:layout_marginTop="50dp"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp">
@@ -40,9 +40,9 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:text="Share"
-            android:textColor="#FFFFFF"
+            android:textColor="#112D4E"
             app:cornerRadius="50dp"
-            app:strokeColor="#FFFFFF"
+            app:strokeColor="#112D4E"
             />
 
         <com.google.android.material.button.MaterialButton
@@ -54,9 +54,9 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:text="Receive"
-            android:textColor="#FFFFFF"
+            android:textColor="#112D4E"
             app:cornerRadius="50dp"
-            app:strokeColor="#FFFFFF"/>
+            app:strokeColor="#112D4E"/>
     </LinearLayout>
 
     <com.google.android.material.textview.MaterialTextView
@@ -67,7 +67,7 @@
         android:layout_marginTop="50dp"
         android:gravity="center"
         android:text="Click to verify email"
-        android:textColor="#FFFFFF" />
+        android:textColor="#3F72AF" />
 
 
 
