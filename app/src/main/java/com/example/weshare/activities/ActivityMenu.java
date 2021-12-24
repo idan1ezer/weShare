@@ -29,16 +29,16 @@ public class ActivityMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         fAuth = FirebaseAuth.getInstance();
-        //FirebaseUser user = fAuth.getCurrentUser();
+        FirebaseUser user = fAuth.getCurrentUser();
 
         //menu_TXT_hello.setText("Hello, " + user.getDisplayName());
 
         //check for null shit
         findViews();
-        //if (user.isEmailVerified())
+        if (user.isEmailVerified())
             initBTNs();
-        //else
-            //notVerified(user);
+        else
+            notVerified(user);
     }
 
 
@@ -68,6 +68,9 @@ public class ActivityMenu extends AppCompatActivity {
                     @Override
                     public void onSuccess(@NonNull Void unused) {
                         Toast.makeText(ActivityMenu.this, "Verification mail has been sent!", Toast.LENGTH_LONG).show();
+                        finish();
+                        Intent intent = new Intent(ActivityMenu.this, ActivityStart.class);
+                        startActivity(intent);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -77,9 +80,6 @@ public class ActivityMenu extends AppCompatActivity {
                 });
             }
         });
-        finish();
-        Intent intent = new Intent(this, ActivityStart.class);
-        startActivity(intent);
     }
 
 
