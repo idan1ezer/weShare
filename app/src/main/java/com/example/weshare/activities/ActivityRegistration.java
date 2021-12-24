@@ -28,11 +28,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class ActivityRegistration extends AppCompatActivity {
 
-    private TextInputLayout reg_EDT_username;
+    private TextInputLayout reg_EDT_email;
     private TextInputLayout reg_EDT_password;
     private TextInputLayout reg_EDT_name;
     private TextInputLayout reg_EDT_phone;
-    private TextInputLayout reg_EDT_email;
     private MaterialTextView reg_TXT_login;
 
     private TextInputLayout[] allFields;
@@ -71,10 +70,6 @@ public class ActivityRegistration extends AppCompatActivity {
     }
 
     private void checkFormValidation() {
-        Validator.Builder
-                .make(reg_EDT_username)
-                .addWatcher(new Validator.Watcher_Username("Invalid username"))
-                .build();
 
         Validator.Builder
                 .make(reg_EDT_password)
@@ -147,11 +142,10 @@ public class ActivityRegistration extends AppCompatActivity {
                     userID = fAuth.getCurrentUser().getUid();
 
                     User user = new User().
-                            setUsername(reg_EDT_username.getEditText().getText().toString()).
+                            setEmail(reg_EDT_email.getEditText().getText().toString()).
                             setPassword(reg_EDT_password.getEditText().getText().toString()).
                             setName(reg_EDT_name.getEditText().getText().toString()).
                             setPhone(reg_EDT_phone.getEditText().getText().toString()).
-                            setEmail(reg_EDT_email.getEditText().getText().toString()).
                             setDonations(0).setReceived(0);
 
                     myRef.child(userID).setValue(user);
@@ -166,20 +160,18 @@ public class ActivityRegistration extends AppCompatActivity {
     }
 
     private void findViews() {
-        reg_EDT_username = findViewById(R.id.reg_EDT_username);
+        reg_EDT_email = findViewById(R.id.reg_EDT_email);
         reg_EDT_password = findViewById(R.id.reg_EDT_password);
         reg_EDT_name = findViewById(R.id.reg_EDT_name);
         reg_EDT_phone = findViewById(R.id.reg_EDT_phone);
-        reg_EDT_email = findViewById(R.id.reg_EDT_email);
         reg_BTN_register = findViewById(R.id.reg_BTN_register);
         reg_TXT_login = findViewById(R.id.reg_TXT_login);
 
         allFields = new TextInputLayout[] {
-                reg_EDT_username,
+                reg_EDT_email,
                 reg_EDT_password,
                 reg_EDT_name,
-                reg_EDT_phone,
-                reg_EDT_email
+                reg_EDT_phone
         };
     }
 }

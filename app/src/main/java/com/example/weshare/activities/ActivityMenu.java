@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class ActivityMenu extends AppCompatActivity {
+    private MaterialTextView menu_TXT_hello;
     private MaterialButton menu_BTN_share;
     private MaterialButton menu_BTN_receive;
     private MaterialTextView menu_TXT_verify;
@@ -29,6 +30,8 @@ public class ActivityMenu extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         fAuth = FirebaseAuth.getInstance();
         //FirebaseUser user = fAuth.getCurrentUser();
+
+        //menu_TXT_hello.setText("Hello, " + user.getDisplayName());
 
         //check for null shit
         findViews();
@@ -93,6 +96,7 @@ public class ActivityMenu extends AppCompatActivity {
     }
 
     private void findViews() {
+        menu_TXT_hello = findViewById(R.id.menu_TXT_hello);
         menu_BTN_share = findViewById(R.id.menu_BTN_share);
         menu_BTN_receive = findViewById(R.id.menu_BTN_receive);
         menu_TXT_verify = findViewById(R.id.menu_TXT_verify);

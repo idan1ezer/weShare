@@ -55,6 +55,7 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
     private Uri contentUri;
     private String imageFileName;
     private String imageLink;
+    private boolean isImgOk = false;
 
     private FusedLocationProviderClient client;
     private LocationManager locationManager;
@@ -65,6 +66,7 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
     private MaterialButton share_BTN_datePicker;
     private ShapeableImageView share_IMG_food;
     private MaterialButton share_BTN_share;
+    private TextInputLayout[] allFields;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,32 +105,35 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
     }
 
     private void share() throws IOException {
+        if (isValid()) {
+            FirebaseDatabase database = FirebaseDatabase.getInstance("https://weshare-70609-default-rtdb.firebaseio.com/");
+            DatabaseReference myRef = database.getReference("meals");
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://weshare-70609-default-rtdb.firebaseio.com/");
-        DatabaseReference myRef = database.getReference("meals");
 
+            Meal meal = new Meal().
+                    setName(share_EDT_meal.getEditText().getText().toString()).
+                    setAmount(Integer.valueOf(share_EDT_amount.getEditText().getText().toString())).
+                    setDates("").
+                    setImage("").
+                    setLat(lat).setLon(lon).
+                    setAvailable(true);
 
-        Meal meal = new Meal().
-                setName(share_EDT_meal.getEditText().getText().toString()).
-                setAmount(Integer.valueOf(share_EDT_amount.getEditText().getText().toString())).
-                setDates("").
-                setImage("").
-                setLat(lat).setLon(lon).
-                setAvailable(true);
+            getLocation(meal);
+            uploadImageToFirebase(contentUri, meal);
+            //getImageLink();
+            Log.d("checkImg", "" + imageLink);
+            meal.setImage("" + imageLink);
+            myRef.child("meal_" + meal.getMealId()).setValue(meal);
+            //myRef.child("meal_"+meal.getMealId()).child("image").setValue(imageLink);
 
-        getLocation(meal);
-        uploadImageToFirebase(contentUri, meal);
-        //getImageLink();
-        Log.d("checkImg", ""+imageLink);
-        meal.setImage(""+imageLink);
-        myRef.child("meal_"+meal.getMealId()).setValue(meal);
-        //myRef.child("meal_"+meal.getMealId()).child("image").setValue(imageLink);
+            MyFirebaseDB.setCounter("meals_counter", Meal.getCounter());
 
-        MyFirebaseDB.setCounter("meals_counter", Meal.getCounter());
-
-        finish();
-        Intent intent = new Intent(this, ActivityMenu.class);
-        startActivity(intent);
+            finish();
+            Intent intent = new Intent(this, ActivityMenu.class);
+            startActivity(intent);
+        }
+        else
+            Toast.makeText(this, "One or more field are invalid!", Toast.LENGTH_LONG).show();
     }
 
     private void getLocation(Meal meal) throws IOException {
@@ -169,6 +174,7 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
             contentUri = data.getData();
             //Log.d("tag", "onActivityResult: Gallery Image Uri:  " + imageFileName);
             share_IMG_food.setImageURI(contentUri);
+            isImgOk = true;
         }
     }
 
@@ -271,11 +277,26 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
 
     }
 
+    private boolean isValid() {
+        for (TextInputLayout field : allFields) {
+            if (field.getError() != null || field.getEditText().getText().toString().isEmpty())
+                return false;
+        }
+        if (!isImgOk)
+            return false;
+        return true;
+    }
+
+
     private void findViews() {
         share_EDT_meal = findViewById(R.id.share_EDT_meal);
         share_EDT_amount = findViewById(R.id.share_EDT_amount);
         share_BTN_datePicker = findViewById(R.id.share_BTN_datePicker);
         share_IMG_food = findViewById(R.id.share_IMG_food);
         share_BTN_share = findViewById(R.id.share_BTN_share);
+        allFields = new TextInputLayout[] {
+                share_EDT_meal,
+                share_EDT_amount
+        };
     }
 }

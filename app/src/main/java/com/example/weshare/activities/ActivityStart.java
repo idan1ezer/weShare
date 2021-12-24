@@ -26,6 +26,7 @@ import com.example.weshare.R;
 import com.example.weshare.objects.Meal;
 import com.example.weshare.objects.User;
 import com.example.weshare.support.MyFirebaseDB;
+import com.example.weshare.support.Validator;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -49,6 +50,7 @@ public class ActivityStart extends AppCompatActivity {
     private MaterialButton start_BTN_register;
     private MaterialButton start_BTN_login;
     private MaterialTextView start_TXT_forgot;
+    private TextInputLayout[] loginFields;
 
     private FirebaseAuth fAuth;
     private String userID;
@@ -62,6 +64,7 @@ public class ActivityStart extends AppCompatActivity {
         findViews();
         initBTNs();
         initCounters();
+        checkLoginValidation();
 
         //FirebaseDatabase database = FirebaseDatabase.getInstance("https://weshare-70609-default-rtdb.firebaseio.com/");
         //DatabaseReference myRef = database.getReference("DB_counter");
@@ -69,6 +72,7 @@ public class ActivityStart extends AppCompatActivity {
         //myRef.child("meals_counter").setValue(0);
 
     }
+
 
     private void initCounters() {
         MyFirebaseDB.getCounter("meals_counter", new MyFirebaseDB.CallBack_Counter() {
@@ -106,23 +110,29 @@ public class ActivityStart extends AppCompatActivity {
 
 
     private void login() {
-        String email, password;
-        email = start_EDT_email.getEditText().getText().toString().trim();
-        password = start_EDT_password.getEditText().getText().toString().trim();
+        if (isValid()) {
+            String email, password;
+            email = start_EDT_email.getEditText().getText().toString().trim();
+            password = start_EDT_password.getEditText().getText().toString().trim();
 
-        fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(ActivityStart.this, "Logged in successfully!", Toast.LENGTH_LONG).show();
-                    finish();
-                    Intent intent = new Intent(ActivityStart.this, ActivityMenu.class);
-                    startActivity(intent);
+            fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(ActivityStart.this, "Logged in successfully!", Toast.LENGTH_LONG).show();
+                        finish();
+                        Intent intent = new Intent(ActivityStart.this, ActivityMenu.class);
+                        startActivity(intent);
+                    }
+                    else
+                        Toast.makeText(ActivityStart.this, "Email or Password are incorrect!", Toast.LENGTH_LONG).show();
                 }
-                else
-                    Toast.makeText(ActivityStart.this, "Email or Password are incorrect!", Toast.LENGTH_LONG).show();
-            }
-        });
+            });
+        }
+
+        else
+            Toast.makeText(this, "One or more field are invalid!", Toast.LENGTH_LONG).show();
+
     }
 
     private void register() {
@@ -166,6 +176,26 @@ public class ActivityStart extends AppCompatActivity {
         passwordResetDiaglog.create().show();
     }
 
+    private void checkLoginValidation() {
+        Validator.Builder
+                .make(start_EDT_email)
+                .addWatcher(new Validator.Watcher_Email("Invalid email"))
+                .build();
+
+        Validator.Builder
+                .make(start_EDT_password)
+                .addWatcher(new Validator.Watcher_Password("Invalid password"))
+                .build();
+    }
+
+    private boolean isValid() {
+        for (TextInputLayout field : loginFields) {
+            if (field.getError() != null || field.getEditText().getText().toString().isEmpty())
+                return false;
+        }
+        return true;
+    }
+
 
     private void findViews() {
         start_EDT_email = findViewById(R.id.start_EDT_email);
@@ -173,5 +203,9 @@ public class ActivityStart extends AppCompatActivity {
         start_BTN_register = findViewById(R.id.start_BTN_register);
         start_BTN_login = findViewById(R.id.start_BTN_login);
         start_TXT_forgot = findViewById(R.id.start_TXT_forgot);
+        loginFields = new TextInputLayout[] {
+                start_EDT_email,
+                start_EDT_password
+        };
     }
 }

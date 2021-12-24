@@ -6,12 +6,11 @@ public class User {
     private static int counter = 0;
     private final int userID;
 
-    private String username;
-    private String name;
-    private double[] address;
-    private String phone;
     private String email;
     private String password;
+    private String name;
+    private String phone;
+    private double[] address;
     private int donations;
     private int received;
 
@@ -31,15 +30,6 @@ public class User {
 
     public int getUserID() {
         return userID;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public User setUsername(String username) {
-        this.username = username;
-        return this;
     }
 
     public String getName() {

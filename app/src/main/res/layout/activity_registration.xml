@@ -31,18 +31,18 @@
         android:layout_marginEnd="70dp">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/reg_EDT_username"
+            android:id="@+id/reg_EDT_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:errorEnabled="true"
-            android:hint="user name"
-            app:counterMaxLength="20"
+            android:hint="email"
+            app:counterMaxLength="3"
             app:boxBackgroundColor="#DBE2EF">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textShortMessage" />
+                android:inputType="textEmailAddress"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -91,22 +91,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/reg_EDT_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:errorEnabled="true"
-            android:hint="email"
-            app:counterMaxLength="3"
-            app:boxBackgroundColor="#DBE2EF">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
