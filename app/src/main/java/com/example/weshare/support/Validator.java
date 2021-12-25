@@ -5,6 +5,7 @@ import android.text.TextWatcher;
 
 import androidx.annotation.NonNull;
 
+import com.example.weshare.objects.User;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
@@ -15,7 +16,6 @@ public class Validator {
     public abstract static class Watcher {
 
         private String error;
-
         private Watcher(String error) {
             this.error = error;
         }
@@ -24,7 +24,7 @@ public class Validator {
     }
 
     public static class Watcher_Email extends Watcher {
-
+        private boolean isExist = false;
         public Watcher_Email(String error) {
             super(error);
         }
@@ -35,6 +35,20 @@ public class Validator {
             if (!pat.matcher(input).matches()) {
                 return false;
             }
+
+            MyFirebaseDB.CallBack_Users callBack_users = new MyFirebaseDB.CallBack_Users() {
+                @Override
+                public void dataReady(ArrayList<User> users) {
+                    for (User user : users) {
+                        if (user.getEmail().equals(input))
+                            isExist = true;
+                    }
+                }
+            };
+
+            if (isExist == true)
+                return false;
+
             return true;
         }
     }
@@ -145,5 +159,7 @@ public class Validator {
             }
         });
     }
+
+
 
 }

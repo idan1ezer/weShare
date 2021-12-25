@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.weshare.objects.Meal;
+import com.example.weshare.objects.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,6 +21,10 @@ public class MyFirebaseDB {
     }
     public interface CallBack_Meals {
         void dataReady(ArrayList<Meal> meals);
+    }
+
+    public interface CallBack_Users {
+        void dataReady(ArrayList<User> users);
     }
 
     public static void getAllMeals(CallBack_Meals callBack_meals) {
@@ -53,6 +58,28 @@ public class MyFirebaseDB {
                 int counter = Integer.valueOf(snapshot.getValue().toString());
                 if (callBack_counter != null)
                     callBack_counter.dataReady(counter);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {  }
+        });
+    }
+
+    public static void getUsers(CallBack_Users callBack_users) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://weshare-70609-default-rtdb.firebaseio.com/");
+        DatabaseReference myRef = database.getReference("users");
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<User> users = new ArrayList<>();
+                for (DataSnapshot child : snapshot.getChildren()) {
+                    try {
+                        User user = child.getValue(User.class);
+                        users.add(user);
+                    } catch (Exception ex) {}
+                }
+
+                if (callBack_users != null)
+                    callBack_users.dataReady(users);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {  }
