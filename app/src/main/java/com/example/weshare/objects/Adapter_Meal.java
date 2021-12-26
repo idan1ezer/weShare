@@ -20,7 +20,7 @@ public class Adapter_Meal extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private Activity activity;
     private ArrayList<Meal> meals = new ArrayList<>();
-    private MealMapClickListener mealMapClickListener;
+    private MealItemClickListener mealItemClickListener;
 
     public Adapter_Meal(FragmentActivity activity, ArrayList<Meal> meals) {
         this.activity = activity;
@@ -28,8 +28,8 @@ public class Adapter_Meal extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         Log.d("AdapterM",""+meals.size());
     }
 
-    public Adapter_Meal setMealMapClickListener(MealMapClickListener mealMapClickListener) {
-        this.mealMapClickListener = mealMapClickListener;
+    public Adapter_Meal setMealItemClickListener(MealItemClickListener mealItemClickListener) {
+        this.mealItemClickListener = mealItemClickListener;
         return this;
     }
 
@@ -52,6 +52,7 @@ public class Adapter_Meal extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 .with(activity)
                 .load(meal.getImage())
                 .into(mealViewHolder.list_IMG_image);
+
     }
 
     @Override
@@ -63,8 +64,9 @@ public class Adapter_Meal extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
 
 
-    public interface MealMapClickListener {
-        void mealMapClicked(Meal meal, int pos);
+    public interface MealItemClickListener {
+        void mealItemClicked(Meal meal, int pos);
+        void takeawayClicked(Meal meal, int pos);
     }
 
 
@@ -76,6 +78,7 @@ public class Adapter_Meal extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         public MaterialTextView list_LBL_amount;
         public MaterialTextView list_LBL_dates;
         public ShapeableImageView list_IMG_image;
+        public ShapeableImageView list_IC_takeaway;
 
 
         public MealViewHolder(final View itemview) {
@@ -85,12 +88,20 @@ public class Adapter_Meal extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             this.list_LBL_amount = itemview.findViewById(R.id.list_LBL_amount);
             this.list_LBL_dates = itemview.findViewById(R.id.list_LBL_dates);
             this.list_IMG_image = itemview.findViewById(R.id.list_IMG_image);
+            this.list_IC_takeaway = itemview.findViewById(R.id.list_IC_takeaway);
 
 
             itemview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mealMapClickListener.mealMapClicked(getItem(getAdapterPosition()), getAdapterPosition());
+                    mealItemClickListener.mealItemClicked(getItem(getAdapterPosition()), getAdapterPosition());
+                }
+            });
+
+            list_IC_takeaway.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mealItemClickListener.takeawayClicked(getItem(getAdapterPosition()), getAdapterPosition());
                 }
             });
         }

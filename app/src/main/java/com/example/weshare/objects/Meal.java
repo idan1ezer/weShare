@@ -1,7 +1,5 @@
 package com.example.weshare.objects;
 
-import android.net.Uri;
-
 public class Meal {
     private static int counter = 0;
     private final int mealId;
@@ -13,7 +11,7 @@ public class Meal {
     private String image;
     private double lat;
     private double lon;
-    private boolean isAvailable;
+    private boolean available = true;
 
 
     public Meal() {
@@ -95,17 +93,17 @@ public class Meal {
         return this;
     }
 
-    public boolean isAvailable() {
-        return isAvailable;
+    public boolean getAvailable() {
+        return available;
     }
 
     public Meal setAvailable(boolean available) {
-        isAvailable = available;
+        this.available = available;
         return this;
     }
 
     @Override
     public String toString() {
-        return "Meal num " + mealId + "is " + name + ", amount of " + amount;
+        return "Meal num " + mealId + "is " + name + ", amount of " + amount +" isAvailable: " + available;
     }
 }

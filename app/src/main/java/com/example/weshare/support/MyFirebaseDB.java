@@ -92,6 +92,12 @@ public class MyFirebaseDB {
         myRef.child(type).setValue(value);
     }
 
+    public static void setMealAvailability(Meal meal) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://weshare-70609-default-rtdb.firebaseio.com/");
+        DatabaseReference myRef = database.getReference("meals");
+        myRef.child("meal_" + meal.getMealId()).child("available").setValue(false);
+    }
+
 
 
 }

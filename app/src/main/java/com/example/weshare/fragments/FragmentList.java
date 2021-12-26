@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.SystemClock;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,9 +59,8 @@ public class FragmentList extends Fragment {
         MyFirebaseDB.CallBack_Meals callBack_meals = new MyFirebaseDB.CallBack_Meals() {
             @Override
             public void dataReady(ArrayList<Meal> mealsArr) {
-                //setMyMeals(mealsArr);
-                //Log.d("showMeals1", ""+myMeals.size());
-                //adapter_meal = new Adapter_Meal(getActivity(), mealsArr);
+
+                mealsArr.removeIf(meal -> (meal.getAvailable() == false));
                 Adapter_Meal adapter_meal = new Adapter_Meal(getActivity(), mealsArr);
 
                 // Grid
@@ -72,12 +69,22 @@ public class FragmentList extends Fragment {
                 board_LST_meals.setItemAnimator(new DefaultItemAnimator());
                 board_LST_meals.setAdapter(adapter_meal);
 
-                adapter_meal.setMealMapClickListener(new Adapter_Meal.MealMapClickListener() {
+                adapter_meal.setMealItemClickListener(new Adapter_Meal.MealItemClickListener() {
                     @Override
-                    public void mealMapClicked(Meal meal, int pos) {
+                    public void mealItemClicked(Meal meal, int pos) {
                         double lat = meal.getLat();
                         double lon = meal.getLon();
                         callBack_list.getMealLocation(lat, lon);
+                    }
+
+                    @Override
+                    public void takeawayClicked(Meal meal, int pos) {
+                        Log.d("takeaway1", ""+meal.getAvailable());
+                        meal.setAvailable(!meal.getAvailable());
+                        board_LST_meals.getAdapter().notifyItemChanged(pos);
+                        MyFirebaseDB.setMealAvailability(meal);
+                        Log.d("takeaway1", ""+meal.getAvailable());
+                        initViews(view);
                     }
                 });
             }
