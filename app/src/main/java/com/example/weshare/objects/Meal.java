@@ -1,5 +1,7 @@
 package com.example.weshare.objects;
 
+import java.text.SimpleDateFormat;
+
 public class Meal {
     private static int counter = 0;
     private final int mealId;
@@ -7,7 +9,7 @@ public class Meal {
     private String name;
     private String location;
     private int amount;
-    private String dates;
+    private String dateString;
     private String image;
     private double lat;
     private double lon;
@@ -57,12 +59,12 @@ public class Meal {
         return this;
     }
 
-    public String getDates() {
-        return dates;
+    public String getDateString() {
+        return dateString;
     }
 
-    public Meal setDates(String dates) {
-        this.dates = dates;
+    public Meal setDateString(String dateString) {
+        this.dateString = dateString;
         return this;
     }
 
@@ -101,6 +103,7 @@ public class Meal {
         this.available = available;
         return this;
     }
+
 
     @Override
     public String toString() {

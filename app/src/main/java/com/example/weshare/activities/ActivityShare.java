@@ -2,6 +2,7 @@ package com.example.weshare.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -18,6 +19,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -34,6 +36,8 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
@@ -43,6 +47,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -50,12 +58,15 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
     public static final int GALLERY_REQUEST_CODE = 105;
 
     private StorageReference storageReference;
-    private String currentPhotoPath;
-
     private Uri contentUri;
     private String imageFileName;
     private String imageLink;
     private boolean isImgOk = false;
+
+    private MaterialDatePicker.Builder builder;
+    private MaterialDatePicker materialDatePicker;
+    private String dateString;
+    private boolean isDateOk = false;
 
     private FusedLocationProviderClient client;
     private LocationManager locationManager;
@@ -75,11 +86,11 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
         setContentView(R.layout.activity_share);
 
         checkLocationPermission();
+        initDate();
         findViews();
         initBTNs();
-
-
     }
+
 
     private void initBTNs() {
         share_BTN_datePicker.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +124,12 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
         });
     }
 
+    private void initDate() {
+        builder = MaterialDatePicker.Builder.datePicker();
+        builder.setTitleText("Select A Date");
+        materialDatePicker = builder.build();
+    }
+
     private void share() throws IOException {
         if (isValid()) {
             FirebaseDatabase database = FirebaseDatabase.getInstance("https://weshare-70609-default-rtdb.firebaseio.com/");
@@ -122,18 +139,16 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
             Meal meal = new Meal().
                     setName(share_EDT_meal.getEditText().getText().toString()).
                     setAmount(Integer.valueOf(share_EDT_amount.getEditText().getText().toString())).
-                    setDates("").
+                    setDateString(dateString).
                     setImage("").
                     setLat(lat).setLon(lon).
                     setAvailable(true);
 
             getLocation(meal);
             uploadImageToFirebase(contentUri, meal);
-            //getImageLink();
             Log.d("checkImg", "" + imageLink);
             meal.setImage("" + imageLink);
             myRef.child("meal_" + meal.getMealId()).setValue(meal);
-            //myRef.child("meal_"+meal.getMealId()).child("image").setValue(imageLink);
 
             MyFirebaseDB.setCounter("meals_counter", Meal.getCounter());
 
@@ -153,19 +168,6 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
         addresses = geocoder.getFromLocation(lat, lon, 1);
         meal.setLocation(addresses.get(0).getAddressLine(0));
 
-        Log.d("mealLoc", "" + meal.getLocation());
-    }
-
-    private void getImageLink() {
-        final StorageReference image = storageReference.child("pictures/" + imageFileName);
-        //Log.d("image22","pictures/" + imageFileName);
-        image.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>(){
-            @Override
-            public void onSuccess(Uri downloadUrl)
-            {
-                //imageLink = downloadUrl;
-            }
-        });
     }
 
 
@@ -181,7 +183,6 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             contentUri = data.getData();
-            //Log.d("tag", "onActivityResult: Gallery Image Uri:  " + imageFileName);
             share_IMG_food.setImageURI(contentUri);
             isImgOk = true;
         }
@@ -196,7 +197,6 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
                 image.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        //Log.d("tag", "onSuccess: Uploaded Image URl is " + uri.toString());
                         imageLink = "" + uri.toString();
 
                         FirebaseDatabase database = FirebaseDatabase.getInstance("https://weshare-70609-default-rtdb.firebaseio.com/");
@@ -283,7 +283,17 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
 
 
     private void datePick() {
+        materialDatePicker.show(getSupportFragmentManager(), "DATE_PICKER");
 
+        materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onPositiveButtonClick(Object selection) {
+                //Calendar c = Calendar.getInstance();
+                dateString = "" + materialDatePicker.getHeaderText();
+                isDateOk = true;
+            }
+        });
     }
 
     private boolean isValid() {
@@ -291,7 +301,7 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
             if (field.getError() != null || field.getEditText().getText().toString().isEmpty())
                 return false;
         }
-        if (!isImgOk)
+        if (!isImgOk || !isDateOk)
             return false;
         return true;
     }

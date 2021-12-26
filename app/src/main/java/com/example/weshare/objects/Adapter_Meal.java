@@ -25,7 +25,6 @@ public class Adapter_Meal extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public Adapter_Meal(FragmentActivity activity, ArrayList<Meal> meals) {
         this.activity = activity;
         this.meals = meals;
-        Log.d("AdapterM",""+meals.size());
     }
 
     public Adapter_Meal setMealItemClickListener(MealItemClickListener mealItemClickListener) {
@@ -47,7 +46,7 @@ public class Adapter_Meal extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         mealViewHolder.list_LBL_meal.setText(""+meal.getName());
         mealViewHolder.list_LBL_amount.setText(""+meal.getAmount());
         mealViewHolder.list_LBL_location.setText(""+meal.getLocation());
-        mealViewHolder.list_LBL_dates.setText(""+meal.getDates());
+        mealViewHolder.list_LBL_dates.setText(""+meal.getDateString());
         Glide
                 .with(activity)
                 .load(meal.getImage())

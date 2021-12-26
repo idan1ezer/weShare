@@ -1,7 +1,9 @@
 package com.example.weshare.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -17,6 +19,7 @@ import com.example.weshare.R;
 import com.example.weshare.callbacks.CallBack_List;
 import com.example.weshare.objects.Adapter_Meal;
 import com.example.weshare.objects.Meal;
+import com.example.weshare.support.MyDate;
 import com.example.weshare.support.MyFirebaseDB;
 
 import java.util.ArrayList;
@@ -57,9 +60,10 @@ public class FragmentList extends Fragment {
 
     private void initViews(View view) {
         MyFirebaseDB.CallBack_Meals callBack_meals = new MyFirebaseDB.CallBack_Meals() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void dataReady(ArrayList<Meal> mealsArr) {
-
+                updateMealsAvailability(mealsArr);
                 mealsArr.removeIf(meal -> (meal.getAvailable() == false));
                 Adapter_Meal adapter_meal = new Adapter_Meal(getActivity(), mealsArr);
 
@@ -91,6 +95,17 @@ public class FragmentList extends Fragment {
         };
         MyFirebaseDB.getAllMeals(callBack_meals);
 
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void updateMealsAvailability(ArrayList<Meal> mealsArr) {
+        for (Meal meal : mealsArr) {
+            if (!MyDate.compareDate(meal.getDateString())){
+                meal.setAvailable(false);
+                MyFirebaseDB.setMealAvailability(meal);
+            }
+        }
     }
 
     public FragmentList setMyMeals(ArrayList<Meal> myMeals) {
