@@ -1,7 +1,6 @@
 package com.example.weshare.objects;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,17 +79,17 @@ public class Adapter_Meal extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         public ShapeableImageView list_IC_takeaway;
 
 
-        public MealViewHolder(final View itemview) {
-            super(itemview);
-            this.list_LBL_meal = itemview.findViewById(R.id.list_LBL_meal);
-            this.list_LBL_location = itemview.findViewById(R.id.list_LBL_location);
-            this.list_LBL_amount = itemview.findViewById(R.id.list_LBL_amount);
-            this.list_LBL_dates = itemview.findViewById(R.id.list_LBL_dates);
-            this.list_IMG_image = itemview.findViewById(R.id.list_IMG_image);
-            this.list_IC_takeaway = itemview.findViewById(R.id.list_IC_takeaway);
+        public MealViewHolder(final View itemView) {
+            super(itemView);
+            this.list_LBL_meal = itemView.findViewById(R.id.list_LBL_meal);
+            this.list_LBL_location = itemView.findViewById(R.id.list_LBL_location);
+            this.list_LBL_amount = itemView.findViewById(R.id.list_LBL_amount);
+            this.list_LBL_dates = itemView.findViewById(R.id.list_LBL_dates);
+            this.list_IMG_image = itemView.findViewById(R.id.list_IMG_image);
+            this.list_IC_takeaway = itemView.findViewById(R.id.list_IC_takeaway);
 
 
-            itemview.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mealItemClickListener.mealItemClicked(getItem(getAdapterPosition()), getAdapterPosition());

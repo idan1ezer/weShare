@@ -21,9 +21,6 @@ import com.example.weshare.callbacks.CallBack_List;
 import com.example.weshare.callbacks.CallBack_Map;
 import com.example.weshare.fragments.FragmentGoogleMaps;
 import com.example.weshare.fragments.FragmentList;
-import com.example.weshare.objects.Adapter_Meal;
-import com.example.weshare.objects.Meal;
-import com.example.weshare.support.MyFirebaseDB;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,7 +29,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.button.MaterialButton;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -137,7 +133,6 @@ public class ActivityReceive extends AppCompatActivity implements LocationListen
             Geocoder geocoder = new Geocoder(ActivityReceive.this, Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
             String address = addresses.get(0).getAddressLine(0);
-
             lat = location.getLatitude();
             lon = location.getLongitude();
 

@@ -9,23 +9,23 @@
     android:background="#F9F7F7">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/menu_TXT_hello"
+        android:id="@+id/menu_TXT_welcome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:layout_marginBottom="10dp"
         android:gravity="center"
         app:fontFamily="sans-serif-medium"
         android:textColor="#112D4E"
         android:textSize="32sp"
-        android:text="Hello"/>
+        android:text="Welcome back"/>
 
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_SPC_food"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_below="@id/menu_TXT_hello"
+        android:layout_below="@id/menu_TXT_welcome"
         android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
         android:scaleType="fitCenter"

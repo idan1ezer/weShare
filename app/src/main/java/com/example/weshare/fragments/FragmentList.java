@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +25,8 @@ import java.util.ArrayList;
 
 
 public class FragmentList extends Fragment {
-
     private ArrayList<Meal> myMeals = new ArrayList<>();
     private RecyclerView board_LST_meals;
-    //private Adapter_Meal adapter_meal;
 
     private AppCompatActivity activity;
     private CallBack_List callBack_list;
@@ -44,11 +41,9 @@ public class FragmentList extends Fragment {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
         findViews(view);
@@ -67,7 +62,6 @@ public class FragmentList extends Fragment {
                 mealsArr.removeIf(meal -> (meal.getAvailable() == false));
                 Adapter_Meal adapter_meal = new Adapter_Meal(getActivity(), mealsArr);
 
-                // Grid
                 board_LST_meals.setLayoutManager(new GridLayoutManager(getActivity(), 1));
                 board_LST_meals.setHasFixedSize(true);
                 board_LST_meals.setItemAnimator(new DefaultItemAnimator());
@@ -83,11 +77,9 @@ public class FragmentList extends Fragment {
 
                     @Override
                     public void takeawayClicked(Meal meal, int pos) {
-                        Log.d("takeaway1", ""+meal.getAvailable());
                         meal.setAvailable(!meal.getAvailable());
                         board_LST_meals.getAdapter().notifyItemChanged(pos);
                         MyFirebaseDB.setMealAvailability(meal);
-                        Log.d("takeaway1", ""+meal.getAvailable());
                         initViews(view);
                     }
                 });

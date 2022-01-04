@@ -3,21 +3,10 @@ package com.example.weshare.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -27,8 +16,6 @@ import com.example.weshare.objects.Meal;
 import com.example.weshare.objects.User;
 import com.example.weshare.support.MyFirebaseDB;
 import com.example.weshare.support.Validator;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,11 +25,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.List;
-import java.util.Locale;
 
 public class ActivityStart extends AppCompatActivity {
     private TextInputLayout start_EDT_email;
@@ -53,7 +35,6 @@ public class ActivityStart extends AppCompatActivity {
     private TextInputLayout[] loginFields;
 
     private FirebaseAuth fAuth;
-    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,12 +46,6 @@ public class ActivityStart extends AppCompatActivity {
         initBTNs();
         initCounters();
         checkLoginValidation();
-
-        //FirebaseDatabase database = FirebaseDatabase.getInstance("https://weshare-70609-default-rtdb.firebaseio.com/");
-        //DatabaseReference myRef = database.getReference("DB_counter");
-        //myRef.child("users_counter").setValue(0);
-        //myRef.child("meals_counter").setValue(0);
-
     }
 
 
@@ -141,12 +116,12 @@ public class ActivityStart extends AppCompatActivity {
 
     private void forgotPassword(View v) {
         EditText resetMail = new EditText(v.getContext());
-        AlertDialog.Builder passwordResetDiaglog = new AlertDialog.Builder(v.getContext());
-        passwordResetDiaglog.setTitle("Reset Password");
-        passwordResetDiaglog.setMessage("Enter your email to receive a link for password reset");
-        passwordResetDiaglog.setView(resetMail);
+        AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
+        passwordResetDialog.setTitle("Reset Password");
+        passwordResetDialog.setMessage("Enter your email to receive a link for password reset");
+        passwordResetDialog.setView(resetMail);
 
-        passwordResetDiaglog.setPositiveButton("Send", new DialogInterface.OnClickListener() {
+        passwordResetDialog.setPositiveButton("Send", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String mail = resetMail.getText().toString();
@@ -164,14 +139,14 @@ public class ActivityStart extends AppCompatActivity {
             }
         });
 
-        passwordResetDiaglog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        passwordResetDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // to do
+
             }
         });
 
-        passwordResetDiaglog.create().show();
+        passwordResetDialog.create().show();
     }
 
     private void checkLoginValidation() {

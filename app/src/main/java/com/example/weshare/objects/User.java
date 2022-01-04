@@ -1,7 +1,5 @@
 package com.example.weshare.objects;
 
-import java.util.ArrayList;
-
 public class User {
     private static int counter = 0;
     private final int userID;

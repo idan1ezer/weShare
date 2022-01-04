@@ -29,7 +29,6 @@ import android.widget.Toast;
 
 import com.example.weshare.R;
 import com.example.weshare.objects.Meal;
-import com.example.weshare.objects.User;
 import com.example.weshare.support.MyFirebaseDB;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -47,10 +46,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -289,7 +284,6 @@ public class ActivityShare extends AppCompatActivity implements LocationListener
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onPositiveButtonClick(Object selection) {
-                //Calendar c = Calendar.getInstance();
                 dateString = "" + materialDatePicker.getHeaderText();
                 isDateOk = true;
             }
